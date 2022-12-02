@@ -18,6 +18,7 @@ export default async function main() {
         app.use('/' + _fileName, require(path.join(__dirname, "routes", _fileName)));
     });
 
+    // 404
     app.use(function (req: express.Request, res: express.Response, next: express.NextFunction) {
         next(createError(404));
     });
