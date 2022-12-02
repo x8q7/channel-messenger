@@ -10,11 +10,10 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
     // TODO: 验证参数
     let _row: Array<any> | null = await getChannelById(channelId, pageNum, pageSize);
     if (!_row) {
-        res.end(BackData(Code.DB_ERR, "DB: ERROR", {}));
+        res.send(BackData(Code.DB_ERR, "DB: ERROR", {}));
     } else {
-        res.end(BackData(Code.OK, "ok", _row));
+        res.send(BackData(Code.OK, "ok", _row));
     }
-
 });
 
 module.exports = router;
