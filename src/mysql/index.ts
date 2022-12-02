@@ -15,7 +15,7 @@ const pool: mysql2.Pool = mysql2.createPool({
 export function query(sql: string, params: Array<any>, cb: Function) {
     pool.query(sql, params, function (err, rows, fields) {
         if (err) {
-            logger.error(`[DB-ERR] sql=(${sql}), _newParams=${JSON.stringify(_newParams)} err=${err}`);
+            logger.error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
         }
         cb(err, rows, fields)
     })
@@ -26,7 +26,7 @@ export function querySync(sql: string, params: Array<any>): Promise<any> {
         pool.query(sql, params, function (err, rows, fields) {
             if (err) {
                 reject(err);
-                logger.error(`[DB-ERR] sql=(${sql}), _newParams=${JSON.stringify(_newParams)} err=${err}`);
+                logger.error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
             }
             resolve(rows);
         })

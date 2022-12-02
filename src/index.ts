@@ -9,7 +9,9 @@ dotenv.config();
 
 export default async function main() {
     const app: express.Application = express();
+    app.use(express.json());
 
+    
     let _dir: Array<string> = await fs.readdirSync(path.join(__dirname, "routes"));
     _dir.forEach((fileName: string) => {
         let [_fileName] = fileName.split(".");
