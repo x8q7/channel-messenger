@@ -5,9 +5,9 @@ import { PageNum, PageSize, PrimaryKey } from "../../mysql/model/table";
 
 
 // 获取channel info
-export async function getChannelById(id: PrimaryKey, pageNum: PageNum, PageSize: PageSize): Promise<RowDataPacket[] | null> {
+export async function getChannelById(id: PrimaryKey): Promise<RowDataPacket[] | null> {
     try {
-        let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel WHERE id = ? limit ?,?;', [id, pageNum * PageSize, PageSize]);
+        let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel WHERE id = ?;', [id]);
         return rows as RowDataPacket[];
     } catch (error) {
         logger.error(`error=${error}`);

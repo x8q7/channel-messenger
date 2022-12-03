@@ -3,7 +3,7 @@ import { ResultSetHeader, RowDataPacket } from 'mysql2'
 import { BackData, Code } from "../code";
 import { isNumber, isString } from "../utils/validate";
 import { PrimaryKey } from "../mysql/model/table";
-import { addMessage } from "../service/message";
+import { addMessage, getMessageList } from "../service/message";
 let router: Router = Router();
 
 // 添加消息
@@ -23,6 +23,26 @@ router.post("/add", async (req: Request, res: Response, next: NextFunction) => {
         return;
     }
     res.send(BackData(Code.OK, "ok", {}));
+});
+
+// 查频道 消息
+router.get("/:channelId", async (req: Request, res: Response, next: NextFunction) => {
+    let channelId: number = parseInt(req.params.channelId);
+    let pageNum: number = parseInt(req.query.pageNum as string);
+    let pageSize: number = parseInt(req.query.pageSize as string);
+    // 验证参数
+    if (!isNumber(channelId) || !isNumber(pageNum) || !isNumber(pageSize)) {
+        res.send(BackData(Code.PARAMS_ERR, "PARAMS: ERROR", {}));
+        return;
+    }
+
+    let _row: RowDataPacket[] | null = await getMessageList(channelId, pageNum, pageSize);
+    if (!_row) {
+        res.send(BackData(Code.DB_ERR, "DB: ERROR", {}));
+        return;
+    }
+    res.send(BackData(Code.OK, "ok", _row));
+
 });
 
 module.exports = router;

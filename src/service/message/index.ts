@@ -15,3 +15,14 @@ export async function addMessage(channelId: PrimaryKey, title: string, content: 
         return null;
     }
 }
+
+// 查频道消息
+export async function getMessageList(channelId: PrimaryKey, pageNum: PageNum, pageSize: PageNum): Promise<RowDataPacket[] | null> {
+    try {
+        let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, title, content, channel, createAt, updateAt FROM message where channel = ? ORDER BY id DESC limit ?,?;', [channelId, pageNum * pageSize, pageSize]);
+        return rows as RowDataPacket[];
+    } catch (error) {
+        logger.error(`error=${error}`);
+        return null;
+    }
+}
