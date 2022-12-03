@@ -13,6 +13,7 @@ export default async function main() {
 
     
     let _dir: Array<string> = await fs.readdirSync(path.join(__dirname, "routes"));
+    console.log("load routes");
     _dir.forEach((fileName: string) => {
         let [_fileName] = fileName.split(".");
         let str: string = path.join(__dirname, "routes", _fileName);

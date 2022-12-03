@@ -32,7 +32,7 @@ router.get("/list", async (req: Request, res: Response, next: NextFunction) => {
         return;
     }
 
-    let _row: RowDataPacket | null = await getChannelList(pageNum, pageSize);
+    let _row: RowDataPacket[] | null = await getChannelList(pageNum, pageSize);
     if (!_row) {
         res.send(BackData(Code.DB_ERR, "DB: ERROR", {}));
         return;
@@ -51,7 +51,7 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
         return;
     }
 
-    let _row: Array<any> | null = await getChannelById(channelId, pageNum, pageSize);
+    let _row: RowDataPacket[] | null = await getChannelById(channelId, pageNum, pageSize);
     if (!_row) {
         res.send(BackData(Code.DB_ERR, "DB: ERROR", {}));
         return;

@@ -1,13 +1,14 @@
-import mysql2 from "mysql2"
+import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2'
 import logger from "../../logger";
 import { query, querySync } from "../../mysql";
-import { PageNum, PrimaryKey } from "../../mysql/model/table";
+import { PageNum, PageSize, PrimaryKey } from "../../mysql/model/table";
+
 
 // 获取channel info
-export async function getChannelById(id: PrimaryKey, pageNum: PageNum, PageSize: PageNum) {
+export async function getChannelById(id: PrimaryKey, pageNum: PageNum, PageSize: PageSize): Promise<RowDataPacket[] | null> {
     try {
-        let rows: Array<any> = await querySync('SELECT id, name FROM channel WHERE id = ? limit ?,?;', [id, pageNum * PageSize, PageSize]);
-        return rows;
+        let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel WHERE id = ? limit ?,?;', [id, pageNum * PageSize, PageSize]);
+        return rows as RowDataPacket[];
     } catch (error) {
         logger.error(`error=${error}`);
         return null;
@@ -15,11 +16,11 @@ export async function getChannelById(id: PrimaryKey, pageNum: PageNum, PageSize:
 }
 
 // 创建 channel
-export async function createChannel(name: string) {
+export async function createChannel(name: string): Promise<ResultSetHeader | null> {
     try {
         let _date: Date = new Date();
-        let result: any = await querySync('INSERT INTO channel (`name`, `createAt`, `updateAt`) VALUES(?, ?, ?);', [name, _date, _date]);
-        return result;
+        let result: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('INSERT INTO channel (`name`, `createAt`, `updateAt`) VALUES(?, ?, ?);', [name, _date, _date]);
+        return result as ResultSetHeader;
     } catch (error) {
         logger.error(`error=${error}`);
         return null;
@@ -27,10 +28,10 @@ export async function createChannel(name: string) {
 }
 
 // 查 channel list
-export async function getChannelList(pageNum: PageNum, PageSize: PageNum) {
+export async function getChannelList(pageNum: PageNum, PageSize: PageNum): Promise<RowDataPacket[] | null> {
     try {
-        let rows: mysql2.RowDataPacket = await querySync('SELECT id, name FROM channel limit ?,?;', [pageNum * PageSize, PageSize]);
-        return rows;
+        let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel limit ?,?;', [pageNum * PageSize, PageSize]);
+        return rows as RowDataPacket[];
     } catch (error) {
         logger.error(`error=${error}`);
         return null;

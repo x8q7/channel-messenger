@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '频道名称',
-  `createAt` datetime(6) DEFAULT NULL,
-  `updateAt` datetime(6) DEFAULT NULL,
+  `createAt` datetime(3) DEFAULT NULL,
+  `updateAt` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -33,7 +33,7 @@ CREATE TABLE `message` (
   `title` varchar(255) NOT NULL COMMENT '标题',
   `content` varchar(255) NOT NULL COMMENT '内容',
   `channel` bigint(20) unsigned NOT NULL COMMENT 'channel_id',
-  `createAt` datetime(6) DEFAULT NULL,
-  `updateAt` datetime(6) DEFAULT NULL,
+  `createAt` datetime(3) DEFAULT NULL,
+  `updateAt` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

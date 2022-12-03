@@ -1,6 +1,7 @@
 import * as process from "process";
 import * as mysql2 from "mysql2";
 import logger from "../logger";
+import { RowDataPacket, ResultSetHeader, OkPacket } from "mysql2";
 
 const pool: mysql2.Pool = mysql2.createPool({
     host: process.env.MYSQL_HOST,
@@ -12,7 +13,7 @@ const pool: mysql2.Pool = mysql2.createPool({
     queueLimit: parseInt(process.env.MYSQL_QUEUE_LIMIT as string) || 0,
 });
 
-export function query(sql: string, params: Array<any>, cb: Function) {
+export function query(sql: string, params: Array<any>, cb: Function): void {
     pool.query(sql, params, function (err, rows, fields) {
         if (err) {
             logger.error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
@@ -21,7 +22,7 @@ export function query(sql: string, params: Array<any>, cb: Function) {
     })
 }
 
-export function querySync(sql: string, params: Array<any>): Promise<any> {
+export function querySync(sql: string, params: Array<any>): Promise<RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader> {
     return new Promise((resolve, reject) => {
         pool.query(sql, params, function (err, rows, fields) {
             if (err) {
