@@ -24,8 +24,8 @@ router.post("/create", async (req: Request, res: Response, next: NextFunction) =
 
 // 查频道列表
 router.get("/list", async (req: Request, res: Response, next: NextFunction) => {
-    let pageNum: number = parseInt(req.query.pageNum as string);
-    let pageSize: number = parseInt(req.query.pageSize as string);
+    let pageNum: number = parseInt(req.query.pageNum as string) || 0;
+    let pageSize: number = parseInt(req.query.pageSize as string) || 10;
     // 验证参数
     if (!isNumber(pageNum) || !isNumber(pageSize)) {
         res.send(BackData(Code.PARAMS_ERR, "PARAMS: ERROR", {}));
@@ -50,12 +50,11 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
     }
 
     let _row: RowDataPacket[] | null = await getChannelById(channelId);
-    if (!_row) {
+    if (!_row || !_row.length) {
         res.send(BackData(Code.DB_ERR, "DB: ERROR", {}));
         return;
     }
-    res.send(BackData(Code.OK, "ok", _row));
-
+    res.send(BackData(Code.OK, "ok", _row[0]));
 });
 
 module.exports = router;

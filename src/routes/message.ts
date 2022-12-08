@@ -28,8 +28,8 @@ router.post("/add", async (req: Request, res: Response, next: NextFunction) => {
 // 查频道 消息
 router.get("/:channelId", async (req: Request, res: Response, next: NextFunction) => {
     let channelId: number = parseInt(req.params.channelId);
-    let pageNum: number = parseInt(req.query.pageNum as string);
-    let pageSize: number = parseInt(req.query.pageSize as string);
+    let pageNum: number = parseInt(req.query.pageNum as string) || 0;
+    let pageSize: number = parseInt(req.query.pageSize as string) || 10;
     // 验证参数
     if (!isNumber(channelId) || !isNumber(pageNum) || !isNumber(pageSize)) {
         res.send(BackData(Code.PARAMS_ERR, "PARAMS: ERROR", {}));
