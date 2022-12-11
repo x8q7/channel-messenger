@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./dist/main",
+    "build": "rm -rf ./logs/* & rm -rf ./dist & npx --package typescript tsc",
     "test": "npx jest --forceExit --colors"
   },
   "keywords": [],
