@@ -8,7 +8,8 @@ RUN npm install typescript -g
 RUN npm install
 RUN npm run build
 
-RUN npm run start && npm run test
+RUN npm run start
+RUN npm run test
 
 EXPOSE 14000
 CMD ["sh", "-c", "node dist/index.js"]
