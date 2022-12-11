@@ -2,11 +2,12 @@ FROM node:18.12.1
 
 RUN mkdir -p /opt/channel_message
 WORKDIR /opt/channel_message
-
 COPY . .
-RUN npm install typescript -g
-RUN npm install
-RUN npm run build
+
+RUN mkdir logs \
+    && npm install typescript -g \
+    && npm install \
+    && npm run build
 
 EXPOSE 14000
-CMD ["sh", "-c", "node dist/index.js"]
+CMD ["start.sh"]
