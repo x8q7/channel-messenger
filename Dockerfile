@@ -5,7 +5,8 @@ WORKDIR /opt/channel_message
 COPY . .
 
 RUN mkdir logs \
-    && npm install -g pm2@latest \
+    && npm config set registry https://registry.npm.taobao.org \
+    && npm install -g pm2 \
     && npm install typescript -g \
     && npm install \
     && npm run build
