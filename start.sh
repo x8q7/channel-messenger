@@ -1,1 +1,1 @@
-node ./dist/main
+pm2 start ./dist/main.js
