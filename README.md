@@ -6,6 +6,7 @@ channel-messenger server
 项目基于：
 node:   18.12.1
 mysql:  8.0.31
+docker: 20.10.21
 ```
 ### 1.1 快速开始
 
