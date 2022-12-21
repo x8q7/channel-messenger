@@ -2,7 +2,6 @@ import path from 'path';
 import express from 'express';
 import createError from 'http-errors';
 import fs from 'fs';
-import logger from './logger';
 import * as dotenv from 'dotenv';
 dotenv.config();
 

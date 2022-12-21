@@ -1,4 +1,4 @@
-import logger from "../../logger";
+import getLogger from "../../logger";
 import { query, querySync } from "../../mysql";
 import { PageNum, PrimaryKey } from "../../mysql/model/table";
 import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2'
@@ -11,7 +11,7 @@ export async function addMessage(channelId: PrimaryKey, title: string, content: 
         let result: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('INSERT INTO message (`title`, `content`, `channel`, `createAt`, `updateAt`) VALUES(?, ?, ?, ?, ?);', [title, content, channelId, _date, _date]);
         return result as ResultSetHeader;
     } catch (error) {
-        logger.error(`error=${error}`);
+        getLogger().error(`error=${error}`);
         return null;
     }
 }
@@ -22,7 +22,7 @@ export async function getMessageList(channelId: PrimaryKey, pageNum: PageNum, pa
         let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, title, content, channel, createAt, updateAt FROM message where channel = ? ORDER BY id DESC limit ?,?;', [channelId, pageNum * pageSize, pageSize]);
         return rows as RowDataPacket[];
     } catch (error) {
-        logger.error(`error=${error}`);
+        getLogger().error(`error=${error}`);
         return null;
     }
 }

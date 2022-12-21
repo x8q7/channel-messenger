@@ -1,6 +1,6 @@
 import * as process from "process";
 import * as mysql2 from "mysql2";
-import logger from "../logger";
+import getLogger from "../logger";
 import { RowDataPacket, ResultSetHeader, OkPacket } from "mysql2";
 
 const pool: mysql2.Pool = mysql2.createPool({
@@ -16,9 +16,9 @@ const pool: mysql2.Pool = mysql2.createPool({
 export function query(sql: string, params: Array<any>, cb: Function): void {
     pool.query(sql, params, function (err, rows, fields) {
         if (err) {
-            logger.error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
+            getLogger("mysql").error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
         }
-        cb(err, rows, fields)
+        cb(err, rows, fields);
     })
 }
 
@@ -27,7 +27,7 @@ export function querySync(sql: string, params: Array<any>): Promise<RowDataPacke
         pool.query(sql, params, function (err, rows, fields) {
             if (err) {
                 reject(err);
-                logger.error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
+                getLogger("mysql").error(`[DB-ERR] sql=(${sql}), params=${JSON.stringify(params)} err=${err}`);
             }
             resolve(rows);
         })

@@ -1,5 +1,5 @@
 import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2'
-import logger from "../../logger";
+import getLogger from "../../logger";
 import { query, querySync } from "../../mysql";
 import { PageNum, PageSize, PrimaryKey } from "../../mysql/model/table";
 
@@ -10,7 +10,7 @@ export async function getChannelById(id: PrimaryKey): Promise<RowDataPacket[] | 
         let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel WHERE id = ?;', [id]);
         return rows as RowDataPacket[];
     } catch (error) {
-        logger.error(`error=${error}`);
+        getLogger().error(`error=${error}`);
         return null;
     }
 }
@@ -22,7 +22,7 @@ export async function createChannel(name: string): Promise<ResultSetHeader | nul
         let result: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('INSERT INTO channel (`name`, `createAt`, `updateAt`) VALUES(?, ?, ?);', [name, _date, _date]);
         return result as ResultSetHeader;
     } catch (error) {
-        logger.error(`error=${error}`);
+        getLogger().error(`error=${error}`);
         return null;
     }
 }
@@ -33,7 +33,7 @@ export async function getChannelList(pageNum: PageNum, PageSize: PageNum): Promi
         let rows: RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader = await querySync('SELECT id, name FROM channel limit ?,?;', [pageNum * PageSize, PageSize]);
         return rows as RowDataPacket[];
     } catch (error) {
-        logger.error(`error=${error}`);
+        getLogger().error(`error=${error}`);
         return null;
     }
 }
