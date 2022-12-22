@@ -1,14 +1,14 @@
 {
   "name": "channel-messenger",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "channel-messenger",
+  "main": "main.js",
   "scripts": {
     "start": "node ./dist/main",
     "build": "rm -rf ./logs/* & rm -rf ./dist & npx --package typescript tsc",
     "test": "npx jest --forceExit --colors"
   },
-  "keywords": [],
+  "keywords": ["channel-messenger"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
