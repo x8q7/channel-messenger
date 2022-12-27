@@ -1,4 +1,4 @@
-import { Table } from "./table";
+import { Table } from './table';
 
 export interface Message extends Table {
     // id: number;

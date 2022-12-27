@@ -16,9 +16,9 @@ interface Result {
 }
 
 export function BackData(code: Code, message: string, data: any): Result {
-    return {
-        code,
-        message,
-        data
-    }
+	return {
+		code,
+		message,
+		data
+	};
 }
