@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./dist/main",
     "build": "rm -rf ./logs/* & rm -rf ./dist & npx --package typescript tsc",
-    "test": "npx jest --forceExit --colors"
+    "test": "npx jest --forceExit --colors",
+    "prepare": "husky install"
   },
   "keywords": [
     "channel-messenger"
@@ -25,6 +26,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.2",
     "jest": "^29.3.1",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.3",
